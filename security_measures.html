@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Security Measures</title> <!-- Set static title -->
+    <link rel="stylesheet" href="styles.css"> <!-- Link to CSS -->
+</head>
+<body class="security-measures"> <!-- Apply class based on current page -->
+    <nav>
+        <ul>
+            <li><a href="index.html" class="home-link">Home</a></li>
+            <li><a href="about.html" class="about-link">About</a></li>
+            <li><a href="ethical_considerations.html" class="ethical-considerations-link">Ethical Considerations</a></li>
+            <li><a href="security_measures.html" class="security-measures-link">Security Measures</a></li>
+            <li><a href="challenges_solutions.html" class="challenges-and-solutions-link">Challenges and Solutions</a></li>
+            <li><a href="resources.html" class="resources-link">Resources</a></li>
+        </ul>
+    </nav>
+    <div class="content">
+        <br>
+        <br>
+        <br>
+        <h1><b>Security Measures</b></h1>
+
+        <!-- Implementing Security Enhancements Section -->
+        <section>    
+            <h2><b>Implementing Security Enhancements:</b></h2>
+            <h2><b>Upgrading to TensorFlow==2.17.0</b></h2>
+            <p>
+                In response to the security vulnerabilities discovered in my previous development environment, I took significant steps to enhance the security of my project. One of the primary actions was upgrading to <a href="https://github.com/tensorflow/tensorflow/releases" target="_blank" style="text-decoration: none">tensorflow==2.17.0</a>, a version that addresses several known vulnerabilities and ensures better security practices in machine learning workflows.
+            </p>
+            <p>
+                This upgrade was not merely a software update but a critical measure to protect the integrity of the data and the models being trained. By using a more secure version of TensorFlow, I was able to mitigate the risks associated with <a href="snyk_cd_inject_ntc.png" target="_blank" style="text-decoration: none">code injection vulnerabilities</a> that were present in the earlier versions. This upgrade was essential to ensure that the model training process was not only effective but also secure.
+            </p>
+        </section>
+
+        <!-- Adapting the Script for WSL2 Section -->
+        <section>    
+            <h2><b>Adapting the Script for WSL2 (Windows Subsystem for Linux):</b></h2>
+            <h2><b>A Secure Environment</b></h2>
+            <p>
+                To further bolster security, I transitioned my development environment from native Windows to <a href="https://learn.microsoft.com/en-us/windows/wsl/install" target="_blank" style="text-decoration: none">WSL2 (Windows Subsystem for Linux)</a>. This move was driven by the need to create a more secure and isolated environment where potential vulnerabilities could be better managed.
+            </p>
+            <p>
+                The script, now named <a href="app_WSL2.py" target="_blank" style="text-decoration: none">app_WSL2.py</a>, was adapted to run in WSL2 to avoid the security pitfalls associated with the previous setup. This adaptation involved:
+            </p>
+            <ul>
+                <li><em>Updating Dependencies:</em> Ensuring all libraries were compatible with the WSL2 environment while also being up-to-date to leverage the latest security patches.</li>
+                <br>
+                <li><em>Memory Management Enhancements:</em> Incorporating techniques to clear TensorFlow sessions and manage garbage collection more efficiently to mitigate resource exhaustion during model training.</li>
+                <br>
+                <li><em>GPU Utilization:</em> Leveraging WSL2’s improved support for GPU acceleration to continue using the GPU while benefiting from the enhanced security of a Linux-based environment.</li>
+            </ul>
+            <p>
+                The new script was run using Python 3.12.1 with the following updated dependencies:
+            </p>
+            <ul>
+                <li>tensorflow==2.17.0</li>
+                <br>
+                <li>pandas==2.2.2</li>
+                <br>
+                <li>numpy==1.26.4</li>
+                <br>
+                <li>joblib==1.4.2</li>
+                <br>
+                <li>openpyxl==3.1.5</li>
+                <br>
+                <li>matplotlib==3.9.1.post1</li>
+                <br>
+                <li>scipy==1.7.3</li>
+                <br>
+                <li>sklearn==1.5.1</li>
+            </ul>
+            <p>
+                This environment provided a robust foundation for secure software development, significantly reducing the risk of vulnerabilities in the model training process.
+            </p>
+        </section>
+
+        <!-- Regular Scanning and Updating Section -->
+        <section>    
+            <h2><b>Regular Scanning and Updating: A Key to Mitigating Security Risks</b></h2>
+            <p>
+                In addition to upgrading TensorFlow and adapting the script for WSL2, a critical component of maintaining security was the regular scanning and updating of dependencies. Snyk Security played an invaluable role in this process. By running the updated script through Snyk Security, I ensured that the project was free from known security issues.
+            </p>
+            <p>
+                Regular scanning and updating are vital practices in software development for the following reasons:
+            </p>
+            <ul>
+                <li><em>Prevention of Exploits:</em> Outdated dependencies are often targets for attackers. Regular updates prevent known exploits from being leveraged against the software.</li>
+                <br>
+                <li><em>Compliance with Best Practices:</em> Staying up-to-date with security patches aligns the development process with industry best practices, ensuring that the software adheres to the highest standards of security.</li>
+                <br>
+                <li><em>Continuous Improvement:</em> As new threats emerge, updates provide the necessary tools to protect the software from evolving risks, ensuring long-term security and reliability.</li>
+            </ul>
+        </section>
+
+        <!-- Tradeoffs: Balancing Security with Hardware Constraints Section -->
+        <section>    
+            <h2><b>Tradeoffs: Balancing Security with Hardware Constraints</b></h2>
+            <p>
+                While the security enhancements brought many benefits, they also introduced significant challenges, particularly concerning hardware constraints. The updated environment, <a href="WSL2_training.jpg" class="hover-image" style="text-decoration: none">running</a> on an <a href="nvidia_smi_training.jpg" class="hover-image" style="text-decoration: none">NVIDIA RTX A1000 GPU</a> with only 2 GB of RAM, encountered <a href="WSL2_bilstm_mem_exhst.jpg" class="hover-image" style="text-decoration: none">memory exhaustion</a> issues when attempting to train differently configured models on the same dataset. The training process consistently failed at the point where the 347th file was started or written to the external storage drive, highlighting a critical tradeoff:
+            </p>
+            <p>
+                <em>Security vs. Performance:</em> While upgrading the software environment to meet security recommendations was crucial, it came at the cost of performance due to limited hardware resources. The inability of the existing GPU to handle the memory demands of the updated script forced a reconsideration of the project’s feasibility within the current hardware setup.
+            </p>
+            <p>
+                <em>Cost of Foregoing Projects:</em> In situations where hardware constraints impede progress, developers may face the difficult decision to either invest in more capable hardware or forego certain projects. This reality underscores the importance of aligning security practices with realistic assessments of available resources.
+            </p>
+            <p>
+                Despite these challenges, the benefits of secure software development far outweigh the drawbacks. The decision to prioritize security ensures that the software remains robust and trustworthy, even if it requires re-evaluating and adapting the project’s scope or upgrading hardware.
+            </p>
+            <p>
+                To learn more about the specific steps taken to remediate these challenges, please visit the <a href="challenges_solutions.html" style="text-decoration: none">Challenges and Solutions</a> page of the website.
+            </p>
+        </section>
+
+        <!-- Hover Image Styling Section -->
+        <style>
+            .hover-image {
+                position: relative;
+                text-decoration: none;
+                color: #007bff;
+                cursor: pointer;
+            }
+
+            .hover-image::after {
+                content: "";
+                position: absolute;
+                display: none;
+                top: 100%;
+                left: 50%;
+                transform: translateX(-50%);
+                width: 850px;
+                height: 325px;
+                background-color: #fff;
+                box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+                z-index: 10;
+                background-size: cover;
+                background-repeat: no-repeat;
+                background-position: center;
+            }
+
+            .hover-image[href$="WSL2_training.jpg"]::after {
+                background-image: url('WSL2_training.jpg');
+            }
+
+            .hover-image[href$="nvidia_smi_training.jpg"]::after {
+                background-image: url('nvidia_smi_training.jpg');
+            }
+
+            .hover-image[href$="WSL2_bilstm_mem_exhst.jpg"]::after {
+                background-image: url('WSL2_bilstm_mem_exhst.jpg');
+            }
+
+            .hover-image:hover::after {
+                display: block;
+            }
+        </style>
+    </div>
+
+    <!-- Home button -->
+    <div class="home-button">
+        <a href="index.html">Home</a>
+    </div>
+</body>
+</html>

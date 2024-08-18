@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About</title> <!-- Set static title -->
+    <link rel="stylesheet" href="styles.css"> <!-- Link to CSS -->
+</head>
+<body class="about"> <!-- Apply class based on current page -->
+    <nav>
+        <ul>
+            <li><a href="index.html" class="home-link">Home</a></li>
+            <li><a href="about.html" class="about-link">About</a></li>
+            <li><a href="ethical_considerations.html" class="ethical-considerations-link">Ethical Considerations</a></li>
+            <li><a href="security_measures.html" class="security-measures-link">Security Measures</a></li>
+            <li><a href="challenges_solutions.html" class="challenges-and-solutions-link">Challenges and Solutions</a></li>
+            <li><a href="resources.html" class="resources-link">Resources</a></li>
+        </ul>
+    </nav>
+    <div class="content">
+        <br>
+        <br>
+        <br>
+        <h1><b>Detailed Background</b></h1>
+
+        <!-- Original Script and Purpose Section -->
+        <section>    
+            <h2><b>Original Script and Purpose</b></h2>
+            <p>
+                The foundation of this project began with downloading and preparing house price data for 3,076 U.S. counties, sourced from Zillow Group Data & APIs, retrieved from: <a href="https://www.zillowgroup.com/developers/public-data/" target="_blank" style="text-decoration: none">https://www.zillowgroup.com/developers/public-data/</a>.
+            </p>
+            <p>
+                The dataset was carefully processed as time series data, which was then fed into an LSTM (Long Short-Term Memory) model to train and evaluate house price predictions across these counties.
+            </p>
+            <p>
+                The core script, <a href="house_lstm.py" target="_blank" style="text-decoration: none">house_lstm.py</a>, was developed to handle this task. It was structured to include several key components:
+            </p>
+            <ul>
+                <li><em>Data Preprocessing:</em> Utilizing libraries like NumPy and Pandas to clean and normalize the data.</li>
+                <br>
+                <li><em>Model Definition:</em> Leveraging TensorFlow and Keras to build a Sequential LSTM model with layers for normalization, dropout, and dense connections.</li>
+                <br>
+                <li><em>Training and Evaluation:</em> Employing callbacks such as EarlyStopping and custom metrics to ensure the model's performance and to log detailed metrics for each county.</li>
+                <br>
+                <li><em>GPU Utilization:</em> Ensuring that the script could leverage GPU power for efficient training, which was crucial given the large dataset.</li>
+            </ul>
+            <p>
+                This script ran in an environment with specific dependencies: Python 3.10.0, TensorFlow-GPU 2.10.0, and other libraries essential for data manipulation and model training. The reliance on TensorFlow-GPU 2.10.0 was due to its direct GPU support on a native Windows environment, a necessary choice to efficiently process and train the extensive dataset.
+            </p>
+        </section>
+
+        <!-- Snyk Security Scan and Vulnerability Discovery Section -->
+        <section>    
+            <h2>Snyk Security Scan and Vulnerability Discovery</h2>
+            <p>
+                After successfully training and evaluating the dataset using the house_lstm.py script, I proceeded to generate predictions with another script, <a href="lstm_house_price_predictions_real_price_conf_intvls_2000_2027.py" target="_blank" style="text-decoration: none">lstm_house_price_predictions_real_price_conf_intvls_2000_2027.py</a>. This script was responsible for making house price predictions and extending them into the future, including confidence intervals for better insight.
+            </p>
+            <p>
+                The predictions were produced for Abbeville County, SC, Greene County, PA, and Queens County, NY. The results were saved as .jpg files, which can be viewed here:
+            </p>
+            <ul>
+                <li><a href="lstm_predicted_confidence_intervals_abbeville_county_sc_real_price_2000_2027.png" target="_blank" style="text-decoration: none">LSTM Predicted Confidence Intervals for Abbeville County, SC (2000-2027)</a></li>
+                <li><a href="lstm_predicted_confidence_intervals_greene_county_pa_real_price_2000_2027.png" target="_blank" style="text-decoration: none">LSTM Predicted Confidence Intervals for Greene County, PA (2000-2027)</a></li>
+                <li><a href="lstm_predicted_confidence_intervals_queens_county_ny_real_price_2000_2027.png" target="_blank" style="text-decoration: none">LSTM Predicted Confidence Intervals for Queens County, NY (2000-2027)</a></li>
+            </ul>
+            <p>
+                At this point, I decided to run both scripts through a Snyk Security scan within Visual Studio Code. The scan revealed a critical <a href="snyk_cd_inject_ntc.png" target="_blank" style="text-decoration: none">code injection vulnerability</a> linked to the Keras 2.10.0 library, which was introduced through TensorFlow-GPU 2.10.0. This discovery was alarming, as it posed a significant security risk to the integrity of the software.
+            </p>
+        </section>
+
+        <!-- Decision to Upgrade and Switch to WSL2 Section -->
+        <section>    
+            <h2>Decision to Upgrade and Switch to WSL2</h2>
+            <p>
+                Upon discovering the vulnerability, I made the decision to upgrade and modify the development environment. The choice was to move away from the native Windows setup and instead, run the scripts in WSL2 (Windows Subsystem for Linux), which allowed for a more secure and controlled environment.
+            </p>
+        </section>
+
+        <!-- Remediation Section -->
+        <section>    
+            <h2><b>Remediation:</b></h2>
+            <ul>
+                <li><em>Upgrade TensorFlow:</em> Moved to a later version of TensorFlow, compatible with WSL2, to mitigate the identified vulnerability.</li>
+                <br>
+                <li><em>Switch to WSL2:</em> This shift provided better isolation and security, reducing the risk of potential vulnerabilities affecting the broader system.</li>
+                <br>
+                <li><em>Adjust the Workflow:</em> Rewrote parts of the original script to ensure compatibility and performance within WSL2, while also optimizing for the updated TensorFlow environment.</li>
+            </ul>
+            <p>
+                This transition was essential not only for maintaining the security of the project but also for ensuring that future work on the model and predictions would be secure and reliable.
+            </p>
+            <p>
+                For more details on the ethical considerations that guided these decisions, please refer to the <a href="ethical_considerations.html" style="text-decoration: none">Ethical Considerations</a> section of this website.
+            </p>
+        </section>
+    </div>
+
+    <!-- Home button -->
+    <div class="home-button">
+        <a href="index.html">Home</a>
+    </div>
+</body>
+</html>
